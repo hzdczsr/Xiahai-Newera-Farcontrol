@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>夏海·新纪元 - 统一控制端</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 顶部状态栏 -->
+  <header class="status-bar">
+    <div class="status-left">
+      <div class="device-info">
+        <span class="device-name" id="deviceName">连接中...</span>
+        <span class="device-status" id="deviceStatus"></span>
+      </div>
+    </div>
+    <div class="status-right">
+      <span class="permission-mode" id="permissionMode">只读</span>
+      <button class="btn-icon" id="btnRefresh" title="刷新">&#x21bb;</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- 侧边栏导航 -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-toggle" id="sidebarToggle">&#9776;</div>
+      <div class="nav-items">
+        <button class="nav-item active" data-tab="tasks">
+          <span class="nav-icon">&#x1F4CB;</span>
+          <span class="nav-text">任务</span>
+        </button>
+        <button class="nav-item" data-tab="chat">
+          <span class="nav-icon">&#x1F4AC;</span>
+          <span class="nav-text">对话</span>
+        </button>
+        <button class="nav-item" data-tab="autox">
+          <span class="nav-icon">&#x1F916;</span>
+          <span class="nav-text">AutoX</span>
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <span class="nav-icon">&#x2699;</span>
+          <span class="nav-text">设置</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="content-area">
+      <!-- 任务面板 -->
+      <div class="panel active" id="panel-tasks">
+        <div class="panel-header">
+          <h2>任务列表</h2>
+          <button class="btn-primary" id="btnNewTask">+ 新建任务</button>
+        </div>
+        <div class="task-list" id="taskList">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+
+      <!-- 对话面板 -->
+      <div class="panel" id="panel-chat" hidden>
+        <div class="panel-header">
+          <h2>对话</h2>
+          <div class="chat-controls">
+            <select id="modelSelect">
+              <option value="deepseek-v4-flash">DeepSeek V4 Flash</option>
+            </select>
+            <label class="toggle-switch">
+              <input type="checkbox" id="streamToggle">
+              <span>流式</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="webSearchToggle">
+              <span>联网</span>
+            </label>
+          </div>
+        </div>
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages">
+            <!-- 动态生成 -->
+          </div>
+          <div class="chat-input-area">
+            <textarea id="chatInput" placeholder="输入消息... (Enter发送, Shift+Enter换行)"></textarea>
+            <button class="btn-send" id="btnSend">发送</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AutoX 面板 -->
+      <div class="panel" id="panel-autox" hidden>
+        <div class="panel-header">
+          <h2>AutoX 远程管理</h2>
+        </div>
+        <div id="autoxPanel">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+
+      <!-- 设置面板 -->
+      <div class="panel" id="panel-settings" hidden>
+        <div class="panel-header">
+          <h2>设置</h2>
+        </div>
+        <div class="settings-content">
+          <div class="setting-group">
+            <h3>模型配置</h3>
+            <div class="setting-item">
+              <label>API 地址</label>
+              <input type="text" id="apiUrl" placeholder="https://api.deepseek.com/v1">
+            </div>
+            <div class="setting-item">
+              <label>API Key</label>
+              <input type="password" id="apiKey" placeholder="sk-...">
+            </div>
+          </div>
+          <div class="setting-group">
+            <h3>显示设置</h3>
+            <div class="setting-item">
+              <label>主题</label>
+              <select id="themeSelect">
+                <option value="dark">深色</option>
+                <option value="light">浅色</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 加载提示 -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p>正在连接服务器...</p>
+  </div>
+
+  <!-- 模板 -->
+  <template id="taskTemplate">
+    <div class="task-item">
+      <div class="task-info">
+        <div class="task-name"></div>
+        <div class="task-time"></div>
+      </div>
+      <div class="task-actions">
+        <button class="btn-icon task-action" data-action="view">查看</button>
+        <button class="btn-icon task-action" data-action="delete">删除</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="icons.js"></script>
+  <script src="modules/connection.js"></script>
+  <script src="modules/chat.js"></script>
+  <script src="modules/tasks.js"></script>
+  <script src="modules/agent.js"></script>
+  <script src="modules/autox.js"></script>
+  <script src="modules/settings.js"></script>
+  <script src="modules/skills.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
